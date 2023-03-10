@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
+
+    public Camera cam; 
+    public float lookSpeed = 2.0f;
+    float rotationX = 0;
+    float rotationY = 0;
+    //public float lookXLimit = 45.0f;
     //public GameObject player;
     //public float sensitivity;
  
 /*     void FixedUpdate ()
-     {
+     {  
          float rotateHorizontal = Input.GetAxis ("Mouse X");
          float rotateVertical = Input.GetAxis ("Mouse Y");
          transform.RotateAround (player.transform.position, -Vector3.up, rotateHorizontal * sensitivity); 
@@ -17,19 +23,15 @@ public class Camera : MonoBehaviour
          //transform.Rotate(transform.right * rotateVertical * sensitivity);
      }
 }*/
-    public Camera cam; 
-    public float lookSpeed = 2.0f;
-    public float lookXLimit = 45.0f;
-    float rotationX = 0;
-    float rotationY = 0;
- 
+
     void Update()        
-    {
-            rotationX += Input.GetAxis("Mouse X") * lookSpeed;
-            rotationY += Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            cam.transform.localRotation = Quaternion.Euler(rotationX, rotationY, 0);
-            transform.rotation *= Quaternion.Euler(Input.GetAxis("Mouse X") * lookSpeed, Input.GetAxis("Mouse Y") * lookSpeed , 0);
+    {       
+            
+            rotationY -= Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX -= Input.GetAxis("Mouse X") * lookSpeed;
+            //rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+            cam.transform.localRotation = Quaternion.Euler(rotationY, rotationX, 0);
+            transform.rotation *= Quaternion.Euler(Input.GetAxis("Mouse Y") * lookSpeed, Input.GetAxis("Mouse X") * lookSpeed , 0);
 
            /*rotationY += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationY = Mathf.Clamp(rotationY, -lookXLimit, lookXLimit);
