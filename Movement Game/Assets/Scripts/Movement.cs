@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
     public float jumpVal = 10.0f;
     public float chargingP = 0.0f;
     float smooth = 5.0f;
-    float tiltAngle = 60.0f;
+    float tiltAngle = 90.0f;
 
     //private bool Jump = false;
     private Rigidbody rBody;
@@ -46,6 +46,11 @@ public class Movement : MonoBehaviour
             Quaternion target = Quaternion.Euler(0, tiltAngle, 0 );
             transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
         }
+        if (Input.GetAxis("Horizontal") == -1)
+        {
+            Quaternion target = Quaternion.Euler(0, -tiltAngle, 0 );
+            transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+        }
         
         //charge jump
         if (Input.GetKeyDown(KeyCode.Space)){
@@ -57,6 +62,7 @@ public class Movement : MonoBehaviour
             //Jump = true;
             rBody.AddForce(someVec.normalized * chargingP * jumpForce,  ForceMode.Impulse);
             Debug.Log("sdf");
+            chargingP = 0;
                 
         }
         
@@ -74,7 +80,7 @@ public class Movement : MonoBehaviour
     {
         if (col.gameObject.tag == "platform")
         {
-            rBody.constraints = RigidbodyConstraints.FreezePosition;
+            //rBody.constraints = RigidbodyConstraints.FreezePosition;
             //rBody.constraints = RigidbodyConstraints.FreezeRotation;
             Debug.Log("yas");
         }
